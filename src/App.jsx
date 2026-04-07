@@ -206,4 +206,24 @@ export default function App() {
               </div>
               <span className="font-semibold text-zinc-100">{t.stream.status}</span>
             </div>
-            <div className
+            <div className="text-sm text-zinc-400 space-y-2">
+              <p><span className="text-zinc-500">{t.stream.category}</span> {t.stream.catValue}</p>
+              <p><span className="text-zinc-500">{t.stream.viewers}</span> 124</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer className="py-8 text-center text-zinc-500 text-sm border-t border-zinc-900">
+        <p>{t.footer}</p>
+      </footer>
+
+      <ProjectModal 
+        selectedId={selectedId} 
+        setSelectedId={setSelectedId} 
+        selectedProject={selectedProject} 
+      />
+
+    </div>
+  );
+}
