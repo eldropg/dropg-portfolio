@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown, Radio, ArrowUpRight, Server, Github, Youtube, Twitch, Linkedin } from 'lucide-react';
+import { ChevronDown, Radio, ArrowUpRight, Server } from 'lucide-react';
+import { FaGithub, FaYoutube, FaTwitch, FaLinkedin } from 'react-icons/fa6';
 import { translations } from './data/translations';
 import ServerMonitor from './components/ServerMonitor';
 import ProjectModal from './components/ProjectModal';
@@ -58,9 +59,10 @@ export default function App() {
             {t.nav.toggleLang}
           </button>
           <div className="w-px h-4 bg-zinc-800 mx-2"></div>
-          <a href="https://github.com/eldropg" target="_blank" rel="noreferrer" className="text-zinc-400 hover:text-white transition-colors"><Github size={18} /></a>
-          <a href="#" className="text-zinc-400 hover:text-violet-500 transition-colors"><Twitch size={18} /></a>
-          <a href="#" className="text-zinc-400 hover:text-red-500 transition-colors"><Youtube size={18} /></a>
+          <a href="https://github.com/eldropg" target="_blank" rel="noreferrer" className="text-zinc-400 hover:text-white transition-colors"><FaGithub size={18} /></a>
+          <a href="#" className="text-zinc-400 hover:text-violet-500 transition-colors"><FaTwitch size={18} /></a>
+          <a href="#" className="text-zinc-400 hover:text-red-500 transition-colors"><FaYoutube size={18} /></a>
+          <a href="#" className="text-zinc-400 hover:text-blue-500 transition-colors"><FaLinkedin size={18} /></a>
         </div>
       </nav>
       
@@ -204,24 +206,4 @@ export default function App() {
               </div>
               <span className="font-semibold text-zinc-100">{t.stream.status}</span>
             </div>
-            <div className="text-sm text-zinc-400 space-y-2">
-              <p><span className="text-zinc-500">{t.stream.category}</span> {t.stream.catValue}</p>
-              <p><span className="text-zinc-500">{t.stream.viewers}</span> 124</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <footer className="py-8 text-center text-zinc-500 text-sm border-t border-zinc-900">
-        <p>{t.footer}</p>
-      </footer>
-
-      <ProjectModal 
-        selectedId={selectedId} 
-        setSelectedId={setSelectedId} 
-        selectedProject={selectedProject} 
-      />
-
-    </div>
-  );
-}
+            <div className
