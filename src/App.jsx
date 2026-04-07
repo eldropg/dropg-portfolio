@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MonitorPlay, Server, Clapperboard, ChevronDown, X, Radio, ArrowUpRight } from 'lucide-react';
+import { MonitorPlay, Server, Clapperboard, ChevronDown, X, Radio, ArrowUpRight, Users, Activity } from 'lucide-react';
 
 const professionalData = {
   name: "DropG",
@@ -11,7 +11,7 @@ const professionalData = {
       id: "streaming",
       title: "Live Streaming & Comunidad",
       shortDesc: "Creación de contenido en tiempo real en Twitch y Kick.",
-      longDesc: "Gestión de una comunidad activa mediante transmisiones en vivo. El enfoque principal está en la retención de audiencia, dinámicas interactivas y la integración de alertas personalizadas para una experiencia de usuario única durante el stream.",
+      longDesc: "Gestión de una comunidad activa mediante transmisiones en vivo. El enfoque principal está en la retención de audiencia, dinámicas interactivas y la integración de alertas personalizadas.",
       icon: <MonitorPlay size={32} />,
       tech: ["Twitch", "Kick", "OBS Studio", "Comunidad"]
     },
@@ -19,7 +19,7 @@ const professionalData = {
       id: "server",
       title: "Administración de Servidores",
       shortDesc: "Gestión técnica y ecosistemas multijugador.",
-      longDesc: "Configuración avanzada de plugins, optimización de rendimiento y diseño de economías virtuales. Experiencia en la creación de mecánicas personalizadas usando YAML y gestión de permisos para garantizar un entorno estable y justo.",
+      longDesc: "Configuración avanzada de plugins, optimización de rendimiento y diseño de economías virtuales. Experiencia en la creación de mecánicas personalizadas usando YAML y gestión de permisos para garantizar un entorno estable.",
       icon: <Server size={32} />,
       tech: ["Minecraft", "YAML", "Linux", "DevOps"]
     },
@@ -27,22 +27,77 @@ const professionalData = {
       id: "youtube",
       title: "El Ángulo Muerto: Anatomía del Mal",
       shortDesc: "Investigación documental y true crime.",
-      longDesc: "Dirección de arte, guionización profunda y edición audiovisual para contenido de misterio. Creación de miniaturas de alto impacto (Photoshop) y narrativa inmersiva (Premiere) diseñada para mantener el suspense y el interés del espectador.",
+      longDesc: "Dirección de arte, guionización profunda y edición audiovisual para contenido de misterio. Creación de miniaturas de alto impacto y narrativa inmersiva.",
       icon: <Clapperboard size={32} />,
       tech: ["Premiere", "Photoshop", "Storytelling", "YouTube"]
     }
   ]
 };
 
-export default function App() {
-  // Estado para controlar qué tarjeta está expandida
-  const [selectedId, setSelectedId] = useState(null);
+// --- NUEVO COMPONENTE: MONITOR DE SERVIDOR EN TIEMPO REAL ---
+const ServerStatus = () => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // Encontrar la información del proyecto seleccionado
+  useEffect(() => {
+    // Reemplaza 'mc.hypixel.net' con la IP de tu servidor
+    const serverIP = "mc.hypixel.net"; 
+    
+    fetch(`https://api.mcsrvstat.us/3/${serverIP}`)
+      .then(response => response.json())
+      .then(result => {
+        setData(result);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error("Error fetching server status:", error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <div className="text-sm text-zinc-500 animate-pulse mt-4">Conectando al servidor...</div>;
+  if (!data) return null;
+
+  return (
+    <div className="mt-6 p-4 rounded-xl bg-zinc-950 border border-zinc-800 flex items-center justify-between">
+      <div className="flex items-center gap-3">
+        <div className="relative flex h-3 w-3">
+          {data.online ? (
+            <>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+            </>
+          ) : (
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+          )}
+        </div>
+        <span className="text-sm font-medium text-zinc-300">
+          {data.online ? 'Servidor Operativo' : 'Servidor Offline'}
+        </span>
+      </div>
+      
+      {data.online && (
+        <div className="flex gap-4 text-sm text-zinc-400">
+          <div className="flex items-center gap-1">
+            <Users size={14} className="text-violet-400" />
+            <span>{data.players?.online || 0}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <Activity size={14} className="text-violet-400" />
+            <span>{data.protocol?.name || 'Java'}</span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default function App() {
+  const [selectedId, setSelectedId] = useState(null);
   const selectedProject = professionalData.projects.find(p => p.id === selectedId);
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-50 font-sans selection:bg-violet-900 selection:text-white">
+    <div className="min-h-screen bg-zinc-950 text-zinc-50 font-sans selection:bg-violet-900 selection:text-white overflow-x-hidden">
       
       {/* --- SECCIÓN 1: HERO --- */}
       <section className="relative flex flex-col items-center justify-center min-h-screen px-6 text-center">
@@ -89,23 +144,22 @@ export default function App() {
               layoutId={`card-container-${project.id}`}
               onClick={() => setSelectedId(project.id)}
               whileHover={{ y: -5 }}
-              className="p-8 border border-zinc-800/80 rounded-2xl bg-zinc-900/40 backdrop-blur-md hover:bg-zinc-800/60 hover:border-violet-500/50 hover:shadow-[0_8px_30px_rgba(139,92,246,0.1)] transition-colors duration-300 group cursor-pointer"
+              className="p-8 border border-zinc-800/80 rounded-2xl bg-zinc-900/40 backdrop-blur-md hover:bg-zinc-800/60 hover:border-violet-500/50 transition-colors duration-300 group cursor-pointer flex flex-col"
             >
               <motion.div 
                 layoutId={`icon-${project.id}`}
-                className="mb-6 p-4 inline-block rounded-xl bg-zinc-800 text-zinc-400 group-hover:text-white group-hover:bg-violet-600 group-hover:shadow-[0_0_20px_rgba(139,92,246,0.4)] transition-all duration-300"
+                className="mb-6 p-4 inline-block rounded-xl bg-zinc-800 text-zinc-400 group-hover:text-white group-hover:bg-violet-600 transition-all duration-300 self-start"
               >
                 {project.icon}
               </motion.div>
               <motion.h3 layoutId={`title-${project.id}`} className="text-xl font-semibold mb-3 group-hover:text-violet-100 transition-colors">
                 {project.title}
               </motion.h3>
-              <motion.p layoutId={`desc-${project.id}`} className="text-zinc-400 mb-6 leading-relaxed text-sm">
+              <motion.p layoutId={`desc-${project.id}`} className="text-zinc-400 mb-6 leading-relaxed text-sm flex-grow">
                 {project.shortDesc}
               </motion.p>
               
-              {/* Botón visual para incitar el clic */}
-              <div className="flex items-center text-sm font-medium text-violet-500 group-hover:text-violet-400 transition-colors">
+              <div className="flex items-center text-sm font-medium text-violet-500 mt-auto">
                 Ver detalles <ArrowUpRight size={16} className="ml-1" />
               </div>
             </motion.div>
@@ -123,8 +177,8 @@ export default function App() {
             <p className="text-zinc-400 leading-relaxed mb-6">
               Cuando no estoy escribiendo código o diseñando interfaces, me encuentras creando contenido e interactuando con la comunidad en tiempo real. 
             </p>
-            <div className="flex gap-4">
-              <button className="px-6 py-3 rounded-full bg-violet-600 hover:bg-violet-500 text-white font-medium transition-colors flex items-center gap-2">
+            <div className="flex flex-wrap gap-4">
+              <button className="px-6 py-3 rounded-full bg-violet-600 hover:bg-violet-500 text-white font-medium transition-colors">
                 Ir a Twitch
               </button>
               <button className="px-6 py-3 rounded-full bg-zinc-800 hover:bg-zinc-700 text-white font-medium transition-colors">
@@ -133,18 +187,16 @@ export default function App() {
             </div>
           </div>
 
-          {/* Panel de Estado Simulado */}
           <div className="w-full md:w-auto p-6 rounded-2xl border border-zinc-800 bg-zinc-950 shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-violet-600 to-indigo-600"></div>
             <div className="flex items-center gap-4 mb-4">
-              {/* Círculo con animación de pulso infinito */}
               <div className="relative flex h-4 w-4">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-4 w-4 bg-red-500"></span>
               </div>
               <span className="font-semibold text-zinc-100">DropG está En Vivo</span>
             </div>
-            <div className="text-sm text-zinc-400">
+            <div className="text-sm text-zinc-400 space-y-2">
               <p><span className="text-zinc-500">Categoría:</span> Desarrollo Web / Chatting</p>
               <p><span className="text-zinc-500">Espectadores:</span> 124</p>
             </div>
@@ -152,66 +204,72 @@ export default function App() {
         </div>
       </section>
 
-      {/* --- FOOTER MINIMALISTA --- */}
+      {/* --- FOOTER --- */}
       <footer className="py-8 text-center text-zinc-500 text-sm border-t border-zinc-900">
         <p>© 2026 DropG. Construido con React & Tailwind v4.</p>
       </footer>
 
-      {/* --- OVERLAY DE EXPANSIÓN (MODAL INTERACTIVO) --- */}
+      {/* --- OVERLAY DE EXPANSIÓN (MODAL) --- */}
       <AnimatePresence>
         {selectedId && selectedProject && (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 bg-black/80 backdrop-blur-sm"
-            onClick={() => setSelectedId(null)} // Cierra al hacer clic fuera
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+            onClick={() => setSelectedId(null)}
           >
             <motion.div 
               layoutId={`card-container-${selectedProject.id}`}
-              className="bg-zinc-950 border border-zinc-800 rounded-3xl p-8 md:p-12 max-w-2xl w-full relative overflow-hidden"
-              onClick={(e) => e.stopPropagation()} // Evita que se cierre al hacer clic adentro
+              className="bg-zinc-950 border border-zinc-800 rounded-3xl p-6 md:p-10 max-w-2xl w-full relative overflow-hidden flex flex-col max-h-[90vh]"
+              onClick={(e) => e.stopPropagation()}
             >
-              {/* Brillo de fondo en el modal */}
-              <div className="absolute -top-24 -right-24 w-48 h-48 bg-violet-600/20 blur-3xl rounded-full"></div>
+              <div className="absolute -top-24 -right-24 w-48 h-48 bg-violet-600/20 blur-3xl rounded-full pointer-events-none"></div>
 
               <button 
                 onClick={() => setSelectedId(null)}
-                className="absolute top-6 right-6 p-2 rounded-full bg-zinc-900 text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
+                className="absolute top-4 right-4 p-2 rounded-full bg-zinc-900 text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors z-10"
               >
                 <X size={20} />
               </button>
 
-              <motion.div layoutId={`icon-${selectedProject.id}`} className="mb-6 p-4 inline-block rounded-xl bg-violet-600 text-white shadow-[0_0_20px_rgba(139,92,246,0.3)]">
-                {selectedProject.icon}
-              </motion.div>
-              
-              <motion.h3 layoutId={`title-${selectedProject.id}`} className="text-3xl font-bold mb-2">
-                {selectedProject.title}
-              </motion.h3>
-              
-              <motion.p layoutId={`desc-${selectedProject.id}`} className="text-violet-400 font-medium mb-6">
-                {selectedProject.shortDesc}
-              </motion.p>
-              
-              <motion.div 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                className="text-zinc-300 leading-relaxed mb-8"
-              >
-                {selectedProject.longDesc}
-              </motion.div>
+              <div className="overflow-y-auto pr-2 custom-scrollbar">
+                <motion.div layoutId={`icon-${selectedProject.id}`} className="mb-6 p-4 inline-block rounded-xl bg-violet-600 text-white">
+                  {selectedProject.icon}
+                </motion.div>
+                
+                <motion.h3 layoutId={`title-${selectedProject.id}`} className="text-3xl font-bold mb-2 pr-8">
+                  {selectedProject.title}
+                </motion.h3>
+                
+                <motion.p layoutId={`desc-${selectedProject.id}`} className="text-violet-400 font-medium mb-6">
+                  {selectedProject.shortDesc}
+                </motion.p>
+                
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className="text-zinc-300 leading-relaxed mb-6"
+                >
+                  {selectedProject.longDesc}
+                </motion.div>
 
-              <div className="flex flex-wrap gap-2">
-                {selectedProject.tech.map((tech, index) => (
-                  <span 
-                    key={index} 
-                    className="text-sm font-medium px-4 py-2 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-300"
-                  >
-                    {tech}
-                  </span>
-                ))}
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {selectedProject.tech.map((tech, index) => (
+                    <span key={index} className="text-sm font-medium px-4 py-2 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-300">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Renderizar el componente de estado SOLAMENTE si es el proyecto de servidor */}
+                {selectedProject.id === "server" && (
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
+                    <h4 className="text-sm tracking-widest text-zinc-500 uppercase mt-4 mb-2 font-semibold">Monitor de Red</h4>
+                    <ServerStatus />
+                  </motion.div>
+                )}
               </div>
             </motion.div>
           </motion.div>
