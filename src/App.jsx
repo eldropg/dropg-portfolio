@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, Radio, ArrowUpRight, Server } from 'lucide-react';
 import { FaGithub, FaYoutube, FaTwitch, FaLinkedin } from 'react-icons/fa6';
@@ -13,48 +13,22 @@ export default function App() {
   const [selectedId, setSelectedId] = useState(null);
   const selectedProject = t.projects.find(p => p.id === selectedId);
 
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
-
-  useEffect(() => {
-    const updateMousePosition = (e) => setMousePosition({ x: e.clientX, y: e.clientY });
-    window.addEventListener("mousemove", updateMousePosition);
-    return () => window.removeEventListener("mousemove", updateMousePosition);
-  }, []);
-
   const toggleLanguage = () => {
     setLang(prevLang => prevLang === 'es' ? 'en' : 'es');
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-50 font-sans selection:bg-violet-900 selection:text-white overflow-x-hidden md:cursor-none">
+    <div className="min-h-screen bg-zinc-950 text-zinc-50 font-sans selection:bg-violet-900 selection:text-white overflow-x-hidden">
       
-      <motion.div 
-        className="hidden md:flex fixed top-0 left-0 w-8 h-8 border-2 border-violet-500 rounded-full pointer-events-none z-[100] items-center justify-center mix-blend-screen"
-        animate={{ 
-          x: mousePosition.x - 16, 
-          y: mousePosition.y - 16,
-          scale: isHovering ? 1.5 : 1,
-          backgroundColor: isHovering ? "rgba(139, 92, 246, 0.2)" : "transparent"
-        }}
-        transition={{ type: "spring", stiffness: 500, damping: 28, mass: 0.5 }}
-      >
-        <motion.div className="w-1 h-1 bg-violet-400 rounded-full" />
-      </motion.div>
-
       <nav className="absolute top-0 w-full p-6 flex justify-between items-center z-40">
         <div className="text-xl font-bold tracking-tighter flex items-center gap-2">
           <div className="w-3 h-3 bg-violet-600 rounded-sm rotate-45"></div>
           {t.hero.name}
         </div>
-        <div 
-          className="flex items-center gap-4"
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
-        >
+        <div className="flex items-center gap-4">
           <button 
             onClick={toggleLanguage}
-            className="px-3 py-1 text-xs font-bold tracking-wider rounded-full bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-violet-500 transition-all"
+            className="px-3 py-1 text-xs font-bold tracking-wider rounded-full bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-violet-500 transition-all cursor-pointer"
           >
             {t.nav.toggleLang}
           </button>
@@ -90,9 +64,7 @@ export default function App() {
         <motion.div 
           animate={{ y: [0, 10, 0] }} 
           transition={{ repeat: Infinity, duration: 2 }}
-          className="absolute bottom-10 text-zinc-600 cursor-pointer"
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
+          className="absolute bottom-10 text-zinc-600 cursor-pointer hover:text-zinc-300 transition-colors"
           onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
         >
           <ChevronDown size={32} />
@@ -111,10 +83,8 @@ export default function App() {
               key={project.id}
               layoutId={`card-container-${project.id}`}
               onClick={() => setSelectedId(project.id)}
-              onMouseEnter={() => setIsHovering(true)}
-              onMouseLeave={() => setIsHovering(false)}
               whileHover={{ y: -5 }}
-              className="p-8 border border-zinc-800/80 rounded-2xl bg-zinc-900/40 backdrop-blur-md hover:bg-zinc-800/60 hover:border-violet-500/50 transition-colors duration-300 group flex flex-col"
+              className="p-8 border border-zinc-800/80 rounded-2xl bg-zinc-900/40 backdrop-blur-md hover:bg-zinc-800/60 hover:border-violet-500/50 transition-colors duration-300 group cursor-pointer flex flex-col"
             >
               <motion.div 
                 layoutId={`icon-${project.id}`}
@@ -137,14 +107,10 @@ export default function App() {
         </div>
       </section>
 
-      <section 
-        className="px-6 py-24 bg-zinc-900/30 border-y border-zinc-800 relative overflow-hidden"
-        onMouseEnter={() => setIsHovering(true)}
-        onMouseLeave={() => setIsHovering(false)}
-      >
+      <section className="px-6 py-24 bg-zinc-900/30 border-y border-zinc-800 relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-violet-600/5 rounded-full blur-3xl pointer-events-none"></div>
 
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto relative z-10">
           <div className="mb-12 md:text-center">
             <h3 className="text-3xl font-bold mb-4">{t.infrastructure.title}</h3>
             <p className="text-zinc-400 max-w-2xl mx-auto">{t.infrastructure.desc}</p>
@@ -183,11 +149,7 @@ export default function App() {
             <p className="text-zinc-400 leading-relaxed mb-6">
               {t.stream.desc}
             </p>
-            <div 
-              className="flex flex-wrap gap-4"
-              onMouseEnter={() => setIsHovering(true)}
-              onMouseLeave={() => setIsHovering(false)}
-            >
+            <div className="flex flex-wrap gap-4">
               <button className="px-6 py-3 rounded-full bg-violet-600 hover:bg-violet-500 text-white font-medium transition-colors">
                 {t.stream.btnTwitch}
               </button>
