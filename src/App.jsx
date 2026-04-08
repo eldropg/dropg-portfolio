@@ -1,10 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, Radio, ArrowUpRight, Server } from 'lucide-react';
 import { FaGithub, FaYoutube, FaTwitch, FaInstagram } from 'react-icons/fa6';
 import { translations } from './data/translations';
 import ServerMonitor from './components/ServerMonitor';
 import ProjectModal from './components/ProjectModal';
+
+const Typewriter = ({ text }) => {
+  const [currentText, setCurrentText] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    setCurrentText('');
+    setCurrentIndex(0);
+  }, [text]);
+
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setCurrentText(prev => prev + text[currentIndex]);
+        setCurrentIndex(prev => prev + 1);
+      }, 50);
+      return () => clearTimeout(timeout);
+    }
+  }, [currentIndex, text]);
+
+  return (
+    <div className="font-mono text-violet-400 font-medium tracking-tight text-lg md:text-xl flex flex-wrap justify-center items-center gap-2 mt-2">
+      <span className="text-zinc-600 select-none">root@dropg:~$</span>
+      <span>
+        <span className="text-zinc-200">{currentText}</span>
+        <motion.span
+          animate={{ opacity: [1, 0] }}
+          transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }}
+          className="inline-block w-[10px] h-[1em] bg-violet-500 ml-1 align-middle translate-y-[-2px]"
+        />
+      </span>
+    </div>
+  );
+};
 
 export default function App() {
   const [lang, setLang] = useState('es');
@@ -40,23 +74,27 @@ export default function App() {
         </div>
       </nav>
       
-      <section className="relative flex flex-col items-center justify-center min-h-screen px-6 text-center">
+      <section className="relative flex flex-col items-center justify-center min-h-screen px-6 text-center overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-[0.03] bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-violet-600/10 rounded-full blur-[120px] pointer-events-none z-0"></div>
+
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="max-w-3xl space-y-6"
+          className="max-w-3xl space-y-8 relative z-10"
         >
           <h2 className="text-sm tracking-[0.3em] text-violet-500 font-semibold uppercase drop-shadow-[0_0_8px_rgba(139,92,246,0.5)]">
             {t.hero.badge}
           </h2>
-          <h1 className="text-5xl font-extrabold tracking-tight md:text-7xl">
+          
+          <h1 className="text-6xl md:text-8xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-zinc-100 via-violet-200 to-violet-800 pb-2">
             {t.hero.name}
           </h1>
-          <p className="text-xl md:text-2xl text-zinc-300 font-light">
-            {t.hero.tagline}
-          </p>
-          <p className="max-w-2xl mx-auto text-zinc-400 leading-relaxed">
+          
+          <Typewriter text={t.hero.tagline} />
+          
+          <p className="max-w-2xl mx-auto text-zinc-400 leading-relaxed text-lg pt-4">
             {t.hero.about}
           </p>
         </motion.div>
@@ -64,7 +102,7 @@ export default function App() {
         <motion.div 
           animate={{ y: [0, 10, 0] }} 
           transition={{ repeat: Infinity, duration: 2 }}
-          className="absolute bottom-10 text-zinc-600 cursor-pointer hover:text-zinc-300 transition-colors"
+          className="absolute bottom-10 text-zinc-600 cursor-pointer hover:text-zinc-300 transition-colors z-10"
           onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
         >
           <ChevronDown size={32} />
