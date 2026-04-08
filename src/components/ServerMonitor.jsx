@@ -6,7 +6,7 @@ export default function ServerMonitor({ t }) {
   const [serverLoading, setServerLoading] = useState(true);
   const [copied, setCopied] = useState(false);
 
-  const serverIP = "play.legacyrealms.net";
+  const serverIP = "legacyrealms.net";
 
   useEffect(() => {
     fetch(`https://api.mcsrvstat.us/3/${serverIP}`)
