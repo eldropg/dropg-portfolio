@@ -17,18 +17,18 @@ export const translations = {
       action: "Ver detalles"
     },
     infrastructure: {
-      title: "Gestión de Ecosistemas",
-      desc: "Diseño, configuración y monitoreo de infraestructura multijugador compleja. Implementación de lógicas personalizadas mediante YAML y optimización de rendimiento.",
-      monitorSub: "Mi Servidor Oficial de Minecraft",
-      connecting: "Estableciendo conexión con el nodo...",
-      online: "Sistema Operativo y En Línea",
-      offline: "Sistema Fuera de Línea",
+      title: "Legacy Realms Network",
+      desc: "Fundador y CEO de mi propio ecosistema multijugador. Una red de Minecraft construida desde cero, destacando por nuestra modalidad GENS 100% customizada, soporte multiplataforma (1.8x - 1.21.x) y una comunidad activa.",
+      monitorSub: "Estado en Tiempo Real",
+      connecting: "Conectando con el nodo principal...",
+      online: "Servidor En Línea",
+      offline: "Servidor Fuera de Línea",
       error: "Error al resolver la IP del servidor.",
       players: "Jugadores Activos",
-      protocol: "Protocolo Core",
-      stackTitle: "Stack Tecnológico",
-      stackDesc: "Gestión de lógicas avanzadas, despliegue de hologramas, creación de entidades complejas y sistemas de economía.",
-      stackTags: ["YAML", "MythicMobs", "SuperiorSkyblock", "DecentHolograms", "PaperMC", "Server Config"]
+      protocol: "Versiones Soportadas",
+      stackTitle: "Tecnología del Servidor",
+      stackDesc: "La arquitectura que mantiene a Legacy Realms funcionando sin lag, con economías estables y entidades personalizadas.",
+      stackTags: ["YAML", "MythicMobs", "Gens Plugin", "DecentHolograms", "PaperMC", "Optimización"]
     },
     stream: {
       title: "Transmisión en Vivo",
@@ -91,18 +91,18 @@ export const translations = {
       action: "View details"
     },
     infrastructure: {
-      title: "Ecosystem Management",
-      desc: "Design, configuration, and monitoring of complex multiplayer infrastructure. Implementation of custom logic via YAML and performance optimization.",
-      monitorSub: "My Official Minecraft Server",
-      connecting: "Establishing connection with the node...",
-      online: "System Operational & Online",
-      offline: "System Offline",
+      title: "Legacy Realms Network",
+      desc: "Founder and CEO of my own multiplayer ecosystem. A Minecraft network built from scratch, featuring our 100% custom GENS gamemode, cross-version support (1.8x - 1.21.x), and an active community.",
+      monitorSub: "Real-Time Status",
+      connecting: "Connecting to main node...",
+      online: "Server Online",
+      offline: "Server Offline",
       error: "Error resolving server IP.",
       players: "Active Players",
-      protocol: "Core Protocol",
-      stackTitle: "Tech Stack",
-      stackDesc: "Advanced logic management, hologram deployment, complex entity creation, and economy systems.",
-      stackTags: ["YAML", "MythicMobs", "SuperiorSkyblock", "DecentHolograms", "PaperMC", "Server Config"]
+      protocol: "Supported Versions",
+      stackTitle: "Server Technology",
+      stackDesc: "The architecture that keeps Legacy Realms running lag-free, with stable economies and custom entities.",
+      stackTags: ["YAML", "MythicMobs", "Gens Plugin", "DecentHolograms", "PaperMC", "Optimization"]
     },
     stream: {
       title: "Live Broadcasting",
