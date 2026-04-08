@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown, Radio, ArrowUpRight, Server } from 'lucide-react';
+import { ChevronDown, Radio, ArrowUpRight, Server, MessageCircle } from 'lucide-react';
 import { FaGithub, FaYoutube, FaTwitch, FaInstagram } from 'react-icons/fa6';
 import { translations } from './data/translations';
 import ServerMonitor from './components/ServerMonitor';
@@ -159,20 +159,30 @@ export default function App() {
               <ServerMonitor t={t} />
             </div>
 
-            <div className="lg:col-span-2 p-8 rounded-3xl bg-zinc-950 border border-zinc-800 shadow-2xl">
+            <div className="lg:col-span-2 p-8 rounded-3xl bg-zinc-950 border border-zinc-800 shadow-2xl flex flex-col">
               <h4 className="text-lg font-bold text-zinc-100 mb-6 flex items-center gap-2">
                 <Server size={20} className="text-violet-500" /> {t.infrastructure.stackTitle}
               </h4>
               <p className="text-sm text-zinc-400 mb-6 leading-relaxed">
                 {t.infrastructure.stackDesc}
               </p>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 mb-8">
                 {t.infrastructure.stackTags.map((tech, index) => (
                   <span key={index} className="text-xs font-medium px-3 py-1.5 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">
                     {tech}
                   </span>
                 ))}
               </div>
+              
+              <a 
+                href="http://discord.legacyrealms.net/"
+                target="_blank"
+                rel="noreferrer"
+                className="mt-auto w-full py-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold flex items-center justify-center gap-3 transition-all shadow-lg shadow-indigo-500/20 group/discord"
+              >
+                <MessageCircle size={20} className="group-hover/discord:scale-110 transition-transform" />
+                {t.infrastructure.btnDiscord}
+              </a>
             </div>
           </div>
         </div>

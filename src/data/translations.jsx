@@ -27,8 +27,9 @@ export const translations = {
       players: "Jugadores Activos",
       protocol: "Versiones Soportadas",
       stackTitle: "¡Comienza tu Aventura!",
-      stackDesc: "Únete a cientos de jugadores en Legacy Realms. Explora nuestra modalidad GENS única, sube de nivel, domina la economía y participa en nuestros eventos. ¡Copia la IP y entra directamente al servidor!",
-      stackTags: ["Comunidad Activa", "Eventos Semanales", "Economía Dinámica", "Cero Lag", "Soporte 24/7", "Discord Oficial"]
+      stackDesc: "Únete a cientos de jugadores en Legacy Realms. Explora nuestra modalidad GENS única, sube de nivel, domina la economía y participa en nuestros eventos.",
+      btnDiscord: "Unirse al Discord",
+      stackTags: ["Comunidad Activa", "Eventos Semanales", "Economía Dinámica", "Cero Lag", "Soporte 24/7"]
     },
     stream: {
       title: "Transmisión en Vivo",
@@ -101,8 +102,9 @@ export const translations = {
       players: "Active Players",
       protocol: "Supported Versions",
       stackTitle: "Start Your Adventure!",
-      stackDesc: "Join hundreds of players on Legacy Realms. Explore our unique GENS gamemode, level up, dominate the economy, and participate in our events. Copy the IP and jump straight into the server!",
-      stackTags: ["Active Community", "Weekly Events", "Dynamic Economy", "Zero Lag", "24/7 Support", "Official Discord"]
+      stackDesc: "Join hundreds of players on Legacy Realms. Explore our unique GENS gamemode, level up, dominate the economy, and participate in our events.",
+      btnDiscord: "Join Discord",
+      stackTags: ["Active Community", "Weekly Events", "Dynamic Economy", "Zero Lag", "24/7 Support"]
     },
     stream: {
       title: "Live Broadcasting",
