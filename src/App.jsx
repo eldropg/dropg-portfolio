@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, Radio, ArrowUpRight, Server } from 'lucide-react';
-import { FaGithub, FaYoutube, FaTwitch, FaLinkedin } from 'react-icons/fa6';
+import { FaGithub, FaYoutube, FaTwitch, FaInstagram } from 'react-icons/fa6';
 import { translations } from './data/translations';
 import ServerMonitor from './components/ServerMonitor';
 import ProjectModal from './components/ProjectModal';
@@ -34,9 +34,9 @@ export default function App() {
           </button>
           <div className="w-px h-4 bg-zinc-800 mx-2"></div>
           <a href="https://github.com/eldropg" target="_blank" rel="noreferrer" className="text-zinc-400 hover:text-white transition-colors"><FaGithub size={18} /></a>
-          <a href="#" className="text-zinc-400 hover:text-violet-500 transition-colors"><FaTwitch size={18} /></a>
-          <a href="#" className="text-zinc-400 hover:text-red-500 transition-colors"><FaYoutube size={18} /></a>
-          <a href="#" className="text-zinc-400 hover:text-blue-500 transition-colors"><FaLinkedin size={18} /></a>
+          <a href="https://www.twitch.tv/eldropg" target="_blank" rel="noreferrer" className="text-zinc-400 hover:text-violet-500 transition-colors"><FaTwitch size={18} /></a>
+          <a href="https://www.youtube.com/@AnguloMuertoOficial" target="_blank" rel="noreferrer" className="text-zinc-400 hover:text-red-500 transition-colors"><FaYoutube size={18} /></a>
+          <a href="https://www.instagram.com/_drop.g/" target="_blank" rel="noreferrer" className="text-zinc-400 hover:text-pink-500 transition-colors"><FaInstagram size={18} /></a>
         </div>
       </nav>
       
@@ -150,12 +150,22 @@ export default function App() {
               {t.stream.desc}
             </p>
             <div className="flex flex-wrap gap-4">
-              <button className="px-6 py-3 rounded-full bg-violet-600 hover:bg-violet-500 text-white font-medium transition-colors">
+              <a 
+                href="https://www.twitch.tv/eldropg" 
+                target="_blank" 
+                rel="noreferrer"
+                className="px-6 py-3 rounded-full bg-violet-600 hover:bg-violet-500 text-white font-medium transition-colors inline-block"
+              >
                 {t.stream.btnTwitch}
-              </button>
-              <button className="px-6 py-3 rounded-full bg-zinc-800 hover:bg-zinc-700 text-white font-medium transition-colors">
+              </a>
+              <a 
+                href="https://kick.com/eldropg" 
+                target="_blank" 
+                rel="noreferrer"
+                className="px-6 py-3 rounded-full bg-zinc-800 hover:bg-zinc-700 text-white font-medium transition-colors inline-block"
+              >
                 {t.stream.btnKick}
-              </button>
+              </a>
             </div>
           </div>
 
