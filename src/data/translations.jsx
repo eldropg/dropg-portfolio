@@ -26,9 +26,9 @@ export const translations = {
       error: "Error al resolver la IP del servidor.",
       players: "Jugadores Activos",
       protocol: "Versiones Soportadas",
-      stackTitle: "Tecnología del Servidor",
-      stackDesc: "La arquitectura que mantiene a Legacy Realms funcionando sin lag, con economías estables y entidades personalizadas.",
-      stackTags: ["YAML", "MythicMobs", "Gens Plugin", "DecentHolograms", "PaperMC", "Optimización"]
+      stackTitle: "¡Comienza tu Aventura!",
+      stackDesc: "Únete a cientos de jugadores en Legacy Realms. Explora nuestra modalidad GENS única, sube de nivel, domina la economía y participa en nuestros eventos. ¡Copia la IP y entra directamente al servidor!",
+      stackTags: ["Comunidad Activa", "Eventos Semanales", "Economía Dinámica", "Cero Lag", "Soporte 24/7", "Discord Oficial"]
     },
     stream: {
       title: "Transmisión en Vivo",
@@ -100,9 +100,9 @@ export const translations = {
       error: "Error resolving server IP.",
       players: "Active Players",
       protocol: "Supported Versions",
-      stackTitle: "Server Technology",
-      stackDesc: "The architecture that keeps Legacy Realms running lag-free, with stable economies and custom entities.",
-      stackTags: ["YAML", "MythicMobs", "Gens Plugin", "DecentHolograms", "PaperMC", "Optimization"]
+      stackTitle: "Start Your Adventure!",
+      stackDesc: "Join hundreds of players on Legacy Realms. Explore our unique GENS gamemode, level up, dominate the economy, and participate in our events. Copy the IP and jump straight into the server!",
+      stackTags: ["Active Community", "Weekly Events", "Dynamic Economy", "Zero Lag", "24/7 Support", "Official Discord"]
     },
     stream: {
       title: "Live Broadcasting",
