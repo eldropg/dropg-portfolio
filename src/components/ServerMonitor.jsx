@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Users, Activity, Copy, Check } from 'lucide-react';
+import { Users, Activity, Copy, Check, Server } from 'lucide-react';
 
 export default function ServerMonitor({ t }) {
   const [serverData, setServerData] = useState(null);
@@ -30,7 +30,6 @@ export default function ServerMonitor({ t }) {
   return (
     <div className="p-8 rounded-3xl bg-zinc-950 border border-zinc-800 relative shadow-2xl overflow-hidden group">
       
-      {/* --- CAPA 1: IMAGEN DE FONDO CON DEGRADADO --- */}
       <div className="absolute inset-0 z-0">
         <img 
           src="/lobby.jpg" 
@@ -38,12 +37,10 @@ export default function ServerMonitor({ t }) {
           className="w-full h-full object-cover opacity-30 group-hover:opacity-50 transition-opacity duration-700"
           onError={(e) => e.target.style.display = 'none'} 
         />
-        {/* Degradados (Fade) para que la foto se funda con los bordes oscuros */}
         <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/80 to-transparent"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/20 to-zinc-950/80"></div>
       </div>
 
-      {/* --- CAPA 2: CONTENIDO INTERACTIVO (z-10 para flotar sobre la foto) --- */}
       <div className="relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div>
@@ -53,7 +50,7 @@ export default function ServerMonitor({ t }) {
           
           <button 
             onClick={handleCopyIP}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-900/80 backdrop-blur-md border border-zinc-700 hover:border-violet-500 hover:bg-zinc-800 text-zinc-100 transition-all group/btn"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-900/80 backdrop-blur-md border border-zinc-700 hover:border-violet-500 hover:bg-zinc-800 text-zinc-100 transition-all group/btn cursor-pointer"
           >
             <span className="font-mono text-sm tracking-wider">{serverIP}</span>
             {copied ? <Check size={16} className="text-emerald-500" /> : <Copy size={16} className="text-zinc-400 group-hover/btn:text-violet-400" />}
@@ -66,7 +63,6 @@ export default function ServerMonitor({ t }) {
           ) : serverData ? (
             <div className="flex flex-col gap-6">
               
-              {/* ESTADO DE CONEXIÓN */}
               <div className="flex items-center gap-3">
                 <div className="relative flex h-4 w-4">
                   {serverData.online ? (
@@ -83,21 +79,41 @@ export default function ServerMonitor({ t }) {
                 </span>
               </div>
 
-              {/* MOTD (Message of the Day) */}
-              {serverData.online && serverData.motd && serverData.motd.clean && (
-                <div className="p-4 rounded-xl bg-black/60 border border-zinc-800 font-mono text-sm text-zinc-300 flex flex-col items-center justify-center text-center drop-shadow-md">
-                  {serverData.motd.clean.map((line, index) => (
-                    <span key={index}>{line}</span>
-                  ))}
+              {serverData.online && (
+                <div className="p-4 rounded-xl bg-black/80 border border-zinc-800 flex items-center gap-4 drop-shadow-md">
+                  {serverData.icon ? (
+                    <img 
+                      src={serverData.icon} 
+                      alt="Server Logo" 
+                      className="w-16 h-16 rounded-md shadow-lg"
+                      style={{ imageRendering: 'pixelated' }}
+                    />
+                  ) : (
+                    <div className="w-16 h-16 rounded-md bg-zinc-900 border border-zinc-800 flex items-center justify-center">
+                      <Server size={32} className="text-zinc-700" />
+                    </div>
+                  )}
+
+                  <div className="flex-1 overflow-hidden font-mono text-sm md:text-base leading-snug tracking-tight">
+                    {serverData.motd?.html ? (
+                      serverData.motd.html.map((line, index) => (
+                        <div 
+                          key={index} 
+                          dangerouslySetInnerHTML={{ __html: line }} 
+                          style={{ textShadow: '2px 2px 0px rgba(0,0,0,0.8)' }}
+                        />
+                      ))
+                    ) : (
+                      <span className="text-zinc-500">Motd no disponible</span>
+                    )}
+                  </div>
                 </div>
               )}
 
-              {/* JUGADORES Y PROTOCOLO */}
               {serverData.online && (
                 <div className="grid grid-cols-2 gap-4">
                   <div className="p-4 rounded-xl bg-black/50 border border-zinc-800 flex items-center justify-between">
                     <span className="text-zinc-400 text-sm font-medium">{t.infrastructure.players}</span>
-                    {/* Contador de jugadores con efecto Neón */}
                     <div className="flex items-center gap-2 text-emerald-400 font-mono font-bold text-xl drop-shadow-[0_0_12px_rgba(52,211,153,0.6)]">
                       <Users size={20} />
                       {serverData.players?.online || 0}
