@@ -19,7 +19,7 @@ export const translations = {
     infrastructure: {
       title: "Gestión de Ecosistemas",
       desc: "Diseño, configuración y monitoreo de infraestructura multijugador compleja. Implementación de lógicas personalizadas mediante YAML y optimización de rendimiento.",
-      monitorSub: "Servidor Principal de Producción",
+      monitorSub: "Mi Servidor Oficial de Minecraft",
       connecting: "Estableciendo conexión con el nodo...",
       online: "Sistema Operativo y En Línea",
       offline: "Sistema Fuera de Línea",
@@ -85,7 +85,7 @@ export const translations = {
     infrastructure: {
       title: "Ecosystem Management",
       desc: "Design, configuration, and monitoring of complex multiplayer infrastructure. Implementation of custom logic via YAML and performance optimization.",
-      monitorSub: "Main Production Server",
+      monitorSub: "My Official Minecraft Server",
       connecting: "Establishing connection with the node...",
       online: "System Operational & Online",
       offline: "System Offline",
